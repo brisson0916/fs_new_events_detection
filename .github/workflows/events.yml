@@ -17,8 +17,22 @@ jobs:
       - name: Set up Python
         run: uv sync
 
+      - name: Download previous state
+        id: download-state
+        uses: actions/download-artifact@v4
+        with:
+          name: state.json
+        continue-on-error: true
+
       - name: Run event detection
         env:
           FS_EVENTS_URL: ${{ secrets.FS_EVENTS_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: uv run python main.py
+
+      - name: Upload state
+        uses: actions/upload-artifact@v4
+        with:
+          name: state.json
+          path: state.json
+          overwrite: true
