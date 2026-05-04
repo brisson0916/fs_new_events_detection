@@ -19,9 +19,11 @@ jobs:
 
       - name: Download previous state
         id: download-state
-        uses: actions/download-artifact@v4
+        uses: dawidd6/action-download-artifact@v6
         with:
+          workflow: events.yml
           name: state.json
+          path: .
         continue-on-error: true
 
       - name: Run event detection
