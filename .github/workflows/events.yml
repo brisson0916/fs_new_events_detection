@@ -26,6 +26,8 @@ jobs:
           workflow: events.yml
           name: state.json
           path: .
+          check_artifacts: true
+          search_artifacts: true
         continue-on-error: true
 
       - name: Run event detection
