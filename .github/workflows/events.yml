@@ -9,7 +9,7 @@ jobs:
   check-events:
     runs-on: ubuntu-latest
     permissions:
-      actions: read
+      actions: write
     steps:
       - uses: actions/checkout@v4
 
@@ -23,11 +23,13 @@ jobs:
         id: download-state
         uses: dawidd6/action-download-artifact@v6
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: events.yml
           name: state.json
           path: .
           check_artifacts: true
           search_artifacts: true
+          if_no_artifact_found: warn
         continue-on-error: true
 
       - name: Run event detection
